@@ -1,0 +1,17 @@
+array 0.04
+constraints 0.04
+duplicate 0.04
+duplicates 0.04
+input 0.08
+integer 0.04
+nums 0.12
+nums[i] 0.04
+numslength 0.04
+order 0.04
+output 0.08
+power 0.04
+return 0.08
+set 0.08
+solution 0.08
+subsets 0.08
+ 0.04

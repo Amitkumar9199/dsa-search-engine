@@ -1,0 +1,14 @@
+binary 0.05
+constraints 0.05
+input 0.1
+leftmost 0.05
+nodes 0.05
+nodeval 0.05
+number 0.05
+output 0.1
+range 0.05
+return 0.05
+root 0.15
+row 0.05
+tree 0.15
+ 0.05

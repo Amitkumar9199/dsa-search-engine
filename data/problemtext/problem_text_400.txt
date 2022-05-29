@@ -1,0 +1,17 @@
+constraints
+digit
+digit
+explanation
+infinite
+input
+input
+integer
+integer
+nth
+number
+output
+output
+part
+return
+sequence
+sequence

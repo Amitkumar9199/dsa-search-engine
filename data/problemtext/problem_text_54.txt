@@ -1,0 +1,16 @@
+constraints
+elements
+input
+input
+matrix
+matrix
+matrix
+matrix
+matrix[i][j]
+matrix[i]length
+matrixlength
+order
+output
+output
+return
+spiral

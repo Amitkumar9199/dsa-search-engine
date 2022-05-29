@@ -1,0 +1,14 @@
+appearing
+constraints
+count
+digit
+equal
+input
+input
+integer
+integers
+non-negative
+number
+output
+output
+total

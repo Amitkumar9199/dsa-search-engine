@@ -1,0 +1,15 @@
+answer 0.03125
+array 0.09375
+constraints 0.03125
+divisors 0.1875
+explanation 0.03125
+input 0.09375
+integer 0.0625
+integers 0.03125
+nums 0.125
+nums[i] 0.03125
+numslength 0.03125
+output 0.09375
+return 0.0625
+sum 0.0625
+ 0.03125

@@ -1,0 +1,15 @@
+array 0.025
+constraints 0.025
+digit 0.05
+digits 0.275
+explanation 0.05
+input 0.05
+integers 0.025
+number 0.2
+nums 0.075
+nums[i] 0.025
+numslength 0.025
+odd 0.075
+output 0.05
+return 0.025
+ 0.025

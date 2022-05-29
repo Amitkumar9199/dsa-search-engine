@@ -1,0 +1,14 @@
+constraints
+elements
+filled
+generate
+input
+input
+integer
+matrix
+n2
+order
+output
+output
+positive
+spiral

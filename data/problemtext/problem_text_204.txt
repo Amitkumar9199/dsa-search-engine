@@ -1,0 +1,16 @@
+constraints
+explanation
+input
+input
+input
+integer
+number
+numbers
+numbers
+output
+output
+output
+prime
+prime
+return
+strictly

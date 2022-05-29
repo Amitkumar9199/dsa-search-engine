@@ -1,0 +1,16 @@
+answer 0.05
+constraints 0.05
+explanation 0.05
+input 0.1
+integer 0.1
+integers 0.05
+large 0.05
+largest 0.05
+modulo 0.05
+n-digits 0.05
+output 0.1
+palindromic 0.05
+product 0.05
+represented 0.05
+return 0.1
+ 0.05

@@ -1,0 +1,15 @@
+constraints 0.04
+explanation 0.08
+input 0.08
+integer 0.16
+number 0.04
+numbers 0.04
+output 0.08
+perfect 0.12
+product 0.04
+return 0.04
+square 0.12
+squares 0.04
+sum 0.04
+words 0.04
+ 0.04

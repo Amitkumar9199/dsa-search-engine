@@ -1,0 +1,17 @@
+' 0.09375
+characters 0.03125
+constraints 0.03125
+explanation 0.0625
+find 0.03125
+input 0.09375
+length 0.03125
+longest 0.09375
+output 0.09375
+parentheses 0.09375
+s[i] 0.03125
+slength 0.03125
+string 0.03125
+substring 0.09375
+valid 0.09375
+well-formed 0.03125
+ 0.03125

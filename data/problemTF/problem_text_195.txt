@@ -1,0 +1,16 @@
+assume 0.03125
+content 0.03125
+explore 0.03125
+file 0.09375
+filetxt 0.0625
+line 0.40625
+lines 0.03125
+note 0.03125
+output 0.0625
+possibilities 0.03125
+print 0.03125
+script 0.03125
+solutions 0.03125
+tenth 0.03125
+text 0.03125
+ 0.03125

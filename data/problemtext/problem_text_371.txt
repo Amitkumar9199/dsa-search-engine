@@ -1,0 +1,10 @@
+constraints
+input
+input
+integers
+integers
+operators
+output
+output
+return
+sum

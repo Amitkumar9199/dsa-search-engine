@@ -1,0 +1,15 @@
+array 0.08
+binary 0.04
+consecutive 0.12
+constraints 0.04
+digits 0.08
+explanation 0.04
+input 0.08
+maximum 0.08
+number 0.08
+nums 0.12
+nums[i] 0.04
+numslength 0.04
+output 0.08
+return 0.04
+ 0.04

@@ -1,0 +1,11 @@
+calculates 0.0625
+constraints 0.0625
+explanation 0.0625
+implement 0.0625
+input 0.1875
+output 0.1875
+power 0.0625
+powx 0.0625
+raised 0.0625
+xn 0.125
+ 0.0625
