@@ -1,7 +1,8 @@
-const fs=require('fs');
-const express =require('express');
+const fs=require('fs'); 
+const express =require('express'); 
 const router=express.Router();
-const keyword_extractor=require("keyword-extractor");
+const keyword_extractor=require("keyword-extractor"); 
+
 
 //reading files
 const sentence1 =fs.readFileSync('./data/keywords.txt','utf8');
@@ -12,10 +13,10 @@ const TFIDFMATRIX1 =fs.readFileSync('./data/TFIDFMATRIX.txt','utf8');
 const TFIDFMATRIX=TFIDFMATRIX1.split("\n");
 const IDF1 =fs.readFileSync('./data/IDF1.txt','utf8');
 const IDF=IDF1.split("\n");
-const problemtitles1 =fs.readFileSync('./data/problem_titles.txt','utf8');
+const problemtitles1 =fs.readFileSync('./data/problem_titles.txt','utf8'); 
 const problemtitles=problemtitles1.split("\n");
 
-router.use(express.urlencoded({extended:true}));
+router.use(express.urlencoded({extended:true})); 
 
 let map1=new Map();
 TFIDFMATRIX.forEach(element=>{
@@ -87,7 +88,7 @@ function jsondata(text){
     let questions=[];//will contain the json data
     const len=simlarity.length;
     let i=0;
-    let questioncnt=1;
+    let questioncnt=1; 
     // getting questions with highest similarity
     for(i=len-1;i>=0&&i>=len-1-6;i--){
         let ok=simlarity[i];
@@ -97,6 +98,7 @@ function jsondata(text){
         questioncnt++;
     }
     let cnt=0;
+
     // if query string matches witth question title and that question is not taken 
     problemtitles.forEach(element=>{
         ele=element.split(" ");
@@ -122,12 +124,12 @@ function jsondata(text){
     return questions;
 };
 
-router.post('/',(req,res)=>{
+router.post('/',(req,res)=>{        
     //query
     const text=req.body.query;
     
     //extracting required questions depending on query text
-    const questions=jsondata(text);
+    const questions=jsondata(text); 
     //we take at max 13 results 
 
     // rendering the search page

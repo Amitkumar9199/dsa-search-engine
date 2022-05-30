@@ -1,26 +1,21 @@
-const fs = require('fs');
-const express = require('express');
-const app = express();
-const questionRoutes=require('./routes/questionRoutes.js');
+const fs = require('fs'); 
+const express = require('express'); 
+const app = express(); 
+const questionRoutes=require('./routes/questionRoutes.js'); 
 
 const port =process.env.PORT || 3000;
 
-//reading files
-const title=fs.readFileSync('./data/problem_titles.txt','utf8');
-const title1=title.split("\n");
-const url=fs.readFileSync('./data/problem_urls.txt','utf8');
-const url1=url.split("\n");
 
 // to get read data from submitted-forms 
-app.use(express.urlencoded({extended:true}));
+app.use(express.urlencoded({extended:true})); 
 
 //set up template engine
-app.set('view engine','ejs');
+app.set('view engine','ejs'); 
 
 //static files
-app.use('/assets',express.static('./public/assets'));
+app.use('/assets',express.static('./public/assets')); 
 
-app.listen(port);
+app.listen(port); 
 
 //home
 app.get('/',(req,res)=>{
@@ -43,6 +38,16 @@ app.get('/contact',(req,res)=>{
     res.render('contact',{title :'contact us'});
 });
 
+// for finding search results
+app.use('/question',questionRoutes);
+
+
+//reading files
+const title=fs.readFileSync('./data/problem_titles.txt','utf8'); 
+const title1=title.split("\n");
+const url=fs.readFileSync('./data/problem_urls.txt','utf8'); 
+const url1=url.split("\n");
+
 //details page for a particular question 
 app.get('/details/:id',(req,res)=>{
     const id=req.params.id;
@@ -52,8 +57,6 @@ app.get('/details/:id',(req,res)=>{
     res.render('details',{title:'question details',blog:file});
 });
 
-// for finding search results
-app.use('/question',questionRoutes);
 
 //404
 app.use((req,res)=>{
