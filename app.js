@@ -5,11 +5,13 @@ const questionRoutes=require('./routes/questionRoutes.js');
 
 const port =process.env.PORT || 3000;
 
+//reading files
 const title=fs.readFileSync('./data/problem_titles.txt','utf8');
 const title1=title.split("\n");
 const url=fs.readFileSync('./data/problem_urls.txt','utf8');
 const url1=url.split("\n");
-// to get read data from form 
+
+// to get read data from submitted-forms 
 app.use(express.urlencoded({extended:true}));
 
 //set up template engine
@@ -20,22 +22,28 @@ app.use('/assets',express.static('./public/assets'));
 
 app.listen(port);
 
+//home
 app.get('/',(req,res)=>{
     // console.log(req.url);
     res.render('index',{title:'home'})
 });
 
-app.get('about-us',(req,res)=>{
-    res.redirect('/about',{title:'About-us'});
+//about
+app.get('/about-us',(req,res)=>{
+    res.redirect('/about');
 });
 
+//about
 app.get('/about',(req,res)=>{
     res.render('about',{title :'About'});
 });
+
+//contact
 app.get('/contact',(req,res)=>{
     res.render('contact',{title :'contact us'});
 });
 
+//details page for a particular question 
 app.get('/details/:id',(req,res)=>{
     const id=req.params.id;
     // console.log(id);
@@ -44,7 +52,10 @@ app.get('/details/:id',(req,res)=>{
     res.render('details',{title:'question details',blog:file});
 });
 
+// for finding search results
 app.use('/question',questionRoutes);
+
+//404
 app.use((req,res)=>{
     res.status(404).render('404',{title:'404'});
 });

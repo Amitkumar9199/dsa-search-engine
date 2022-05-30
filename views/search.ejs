@@ -6,7 +6,7 @@
     
     <%- include('./partials/nav.ejs') %>
     <div class="blogs content">
-        <h2>Search Results</h2>
+        <h2>Search Results for <%= querystring %> </h2>
         <% if (questions.length>0) { %>
             <% questions.forEach(question => { %>
             <a class="single" href="/details/<%= question._id %> ">

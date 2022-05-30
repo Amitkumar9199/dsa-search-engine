@@ -19,17 +19,11 @@ router.use(express.urlencoded({extended:true}));
 
 let map1=new Map();
 TFIDFMATRIX.forEach(element=>{
-    // console.log(element);
     let element1=element.split(" ");
     map1.set(element1[0]+' '+element1[1],element1[2]);
-    // console.log(map1.get(element1[0]+' '+element1[1]));
 });
 
-router.post('/',(req,res)=>{
-    // console.log(req.body.query);
-    const text=req.body.query;
-    ////
-    
+function jsondata(text){
     const extraction_result =
     keyword_extractor.extract(text,{
         language:"english",
@@ -38,11 +32,11 @@ router.post('/',(req,res)=>{
         remove_duplicates: false
     });
     extraction_result.sort();
-    // console.log(extraction_result);
     const word_count=extraction_result.length;
     let uniquefile = extraction_result.filter(function(element, index){
         return extraction_result.indexOf(element) === index;
     });
+    // unique words
     let uniquecount=[];
     uniquefile.forEach(element=>{
         let cnt=0;
@@ -53,10 +47,10 @@ router.post('/',(req,res)=>{
         });
         uniquecount.push(cnt);
     });
-    let j=0;
-    let file_magnitute=0;
-    let ans=[];
 
+    let j=0;
+    let file_magnitute=0;//mod of vector<tfidf>
+    let ans=[];//tfidf of query string
     uniquefile.forEach(element => {    
         const index=sentence.indexOf(uniquefile[j]);
         if(index !=-1){
@@ -64,66 +58,58 @@ router.post('/',(req,res)=>{
             val=val*IDF[index];
             file_magnitute+=val;
             ans.push([index,val]);
-            // console.log(uniquefile[j],val,index);
         }       
         j++;
     });
+
     let num=0;
     const page_no=2277;
     let simlarity=[];
-
+    //calculating simlarity with each file
     for(num=0;num<=page_no;num++){
 
         let product=0;
         ans.forEach((element)=>{
             index=element[0];
             val=element[1];
-            // console.log(map1.get(num+' '+index));
             if(map1.has(num+' '+index)){
-                // console.log('got it!!');
-                product+=val*map1.get(num+' '+index);
+                product+=val*map1.get(num+' '+index);//numerator part of dot product
             }
         });
 
         if((magnitude[num]*file_magnitute)!=0){
-            simlarity.push([(product)/(magnitude[num]*file_magnitute),num]);
+            simlarity.push([(product)/(magnitude[num]*file_magnitute),num]);//makin an simlarity array
         }
     }
-    // console.log(simlarity.length);
-    // console.log(simlarity);
+
+
     simlarity.sort();
-    let questions=[];
+    let questions=[];//will contain the json data
     const len=simlarity.length;
     let i=0;
     let questioncnt=1;
+    // getting questions with highest similarity
     for(i=len-1;i>=0&&i>=len-1-6;i--){
         let ok=simlarity[i];
-        // console.log(ok[0]);
         val=ok[0];
         num=ok[1];
         questions.push({title:questioncnt+'. '+problemtitles[num],_id:num});
         questioncnt++;
-        // console.log('done');
     }
     let cnt=0;
+    // if query string matches witth question title and that question is not taken 
     problemtitles.forEach(element=>{
         ele=element.split(" ");
         let ok=0;
         for(ok=0;ok<ele.length;ok++){
             const index=uniquefile.indexOf(ele[ok].toLowerCase());
-            if(index!=-1&&questions.length<=10){
-                // console.log('found0');
+            if(index!=-1&&questions.length<=12){
                 let flag=1;
                 questions.forEach(element=>{
                     if(element._id==cnt){
                         flag=0;
                     }
                 });
-                // if(questions.indexOf({title:problemtitles[cnt],_id:cnt})==-1)CONTA{
-                //     questions.push({title:problemtitles[cnt],_id:cnt});
-                //     // console.log('found1');
-                //     break;
-                // }
                 if(flag==1){
                     questions.push({title:questioncnt+'. '+problemtitles[cnt],_id:cnt});
                     questioncnt++;
@@ -133,15 +119,20 @@ router.post('/',(req,res)=>{
         }
         cnt++;
     });
+    return questions;
+};
 
-    // if(questions.length==0){
+router.post('/',(req,res)=>{
+    //query
+    const text=req.body.query;
+    
+    //extracting required questions depending on query text
+    const questions=jsondata(text);
+    //we take at max 13 results 
 
-    // }
-    // questions=[{title:'0. Unique Paths II', _id:'0'}];
-    res.render('search',{title:'search' ,questions:questions});
+    // rendering the search page
+    res.render('search',{title:'search' ,questions:questions,querystring:'"'+text+'"'});
 });
-
-
 
 module.exports=router;
 
