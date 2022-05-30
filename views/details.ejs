@@ -6,26 +6,17 @@
     <div class="details content">
         <h2>
             <%= blog.title %>
-            <a href= <%= blog.url %>  > [link]</a>
+            
         </h2>
         <div>
             <%- blog.body %> 
         </div>
+        <a class="delete" href= <%= blog.url %>>
+            <!-- [link] -->
+            <img src="/assets/link_black_24dp.svg" alt="link to question">
+        </a>
 
     </div>
     <%- include('./partials/footer.ejs') %>  
-    <script>
-        const trashcan=document.querySelector('a.delete');
-        trashcan.addEventListener('click',(e)=>{
-            const endpoint=`/blogs/${trashcan.dataset.doc}`//template string
-            fetch(endpoint,{
-                method:'DELETE'
-            })
-                .then(response=>response.json())
-                .then(data=>window.location.href=data.redirect)
-                .catch(err=>console.log(err));
-        });
-        // no ()=>{}// () { } gave error)
-    </script>
 </body>
 </html>
