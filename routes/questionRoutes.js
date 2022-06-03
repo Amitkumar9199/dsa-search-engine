@@ -98,29 +98,44 @@ function jsondata(text){
         questioncnt++;
     }
     let cnt=0;
-
+    let newquestions=[];
     // if query string matches witth question title and that question is not taken 
     problemtitles.forEach(element=>{
         ele=element.split(" ");
         let ok=0;
         for(ok=0;ok<ele.length;ok++){
             const index=uniquefile.indexOf(ele[ok].toLowerCase());
-            if(index!=-1&&questions.length<=12){
+            
+            if(index!=-1){
+                let match=0;
+                for(let ok1=0;ok1<ele.length;ok1++){
+                    if(uniquefile.indexOf(ele[ok1].toLowerCase())!=-1){
+                        match++;
+                    }
+                }
                 let flag=1;
+                
                 questions.forEach(element=>{
                     if(element._id==cnt){
                         flag=0;
                     }
                 });
                 if(flag==1){
-                    questions.push({title:questioncnt+'. '+problemtitles[cnt],_id:cnt});
-                    questioncnt++;
+                    
+                    newquestions.push([match,{title:'. '+problemtitles[cnt],_id:cnt}]);
+                    // questioncnt++;
                     break;
                 }
             }
         }
         cnt++;
     });
+    newquestions.sort();
+    for(let ok=newquestions.length-1;ok>=0&&ok>=newquestions.length-1-5;ok--){
+        newquestions[ok][1].title=questioncnt+newquestions[ok][1].title;
+        questions.push(newquestions[ok][1]);
+        questioncnt++;
+    }
     return questions;
 };
 
