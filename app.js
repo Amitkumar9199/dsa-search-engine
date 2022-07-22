@@ -1,65 +1,73 @@
-const fs = require('fs'); 
-const express = require('express'); 
-const app = express(); 
-const questionRoutes=require('./routes/questionRoutes.js'); 
+const keyword_extractor = require("keyword-extractor");
+const fs =require('fs');
 
-const port =process.env.PORT || 3000;
+const sentence1 =fs.readFileSync('./stopwords.txt','utf8');
+const stopwords =
+keyword_extractor.extract(sentence1,{
+    language:"english",
+    remove_digits: true,
+    return_changed_case:true,
+    remove_duplicates: true
 
-
-// to get read data from submitted-forms 
-app.use(express.urlencoded({extended:true})); 
-
-//set up template engine
-app.set('view engine','ejs'); 
-
-//static files
-app.use('/assets',express.static('./public/assets')); 
-
-app.listen(port); 
-
-//home
-app.get('/',(req,res)=>{
-    // console.log(req.url);
-    res.render('index',{title:'home'})
 });
+stopwords.sort();
 
-//about
-app.get('/about-us',(req,res)=>{
-    res.redirect('/about');
+num=0
+pageno=2277
+const allwords=[];
+
+for (num=0;num<=pageno;num++){
+    const sentence =fs.readFileSync('./problems/problem_text_'+(num)+'.txt','utf8');
+    const extraction_result1 =
+    keyword_extractor.extract(sentence,{
+        language:"english",
+        remove_digits: true,
+        return_changed_case:true,
+        remove_duplicates: true
+
+    });
+    extraction_result1.forEach(element => {
+        if(!allwords.includes(element)){
+            if(!stopwords.includes(element)){
+                allwords.push(element);
+            }
+        }
+    });
+    allwords.sort();
+    const extraction_result2 =
+    keyword_extractor.extract(sentence,{
+        language:"english",
+        remove_digits: true,
+        return_changed_case:true,
+        remove_duplicates: false
+
+    });
+    const res=[]
+    extraction_result2.forEach(element => {
+        if(!stopwords.includes(element)){
+            res.push(element);
+        }
+    });
+    res.sort();
+    // console.log(extraction_result1);
+    file ="";
+    res.forEach(element => {
+            file=file+element+'\n';
+    });
+    fs.writeFile('./problemtext/problem_text_'+num+'.txt',file,(err)=>{
+        if(err){
+            console.log(err);
+        }
+    });
+};
+
+allwords.sort();
+file ="";
+allwords.forEach(element => {
+        file=file+element+'\n';
 });
-
-//about
-app.get('/about',(req,res)=>{
-    res.render('about',{title :'About'});
+fs.writeFile('keywords.txt',file,(err)=>{
+    if(err){
+        console.log(err);
+    }
 });
-
-//contact
-app.get('/contact',(req,res)=>{
-    res.render('contact',{title :'contact us'});
-});
-
-// for finding search results
-app.use('/question',questionRoutes);
-
-
-//reading files
-const title=fs.readFileSync('./data/problem_titles.txt','utf8'); 
-const title1=title.split("\n");
-const url=fs.readFileSync('./data/problem_urls.txt','utf8'); 
-const url1=url.split("\n");
-
-//details page for a particular question 
-app.get('/details/:id',(req,res)=>{
-    const id=req.params.id;
-    // console.log(id);
-    const body1=fs.readFileSync('./data/problems/problem_text_'+id+'.txt');
-    file={title:title1[id],url:url1[id],body:body1};
-    res.render('details',{title:'question details',blog:file});
-});
-
-
-//404
-app.use((req,res)=>{
-    res.status(404).render('404',{title:'404'});
-});
-
